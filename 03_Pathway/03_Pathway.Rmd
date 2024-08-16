@@ -1,0 +1,61 @@
+---
+title:   "A doublesex model for reduced dimorphism - FELLA Pathway Analysis"
+output:   html_notebook
+by:       R. Coig
+updated:  8/16/24
+---
+Notebook Summary: Pathway enrichment for SD-dsx metabolites 
+```{r,load required libraries}
+library(FELLA)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_results/SD-dsx.data')
+mz_list<-read.csv("../_data/mz_list.csv")
+```
+Pathway Analysis using FELLA - Building dmel KEGG Network
+```{r}
+set.seed(1) 
+#Filter overview pathways (this removes pathways you don't want)
+graph<-buildGraphFromKEGGREST(organism="dme",filter.path=c("01100","01200","01210","01212","01230"))
+tmpdir<-paste0(tempdir(),"/my_database") 
+#Make sure the database does not exist from a former vignette build #Otherwise the vignette will rise an error
+#because FELLA will not overwrite an existing database 
+unlink(tmpdir,recursive=TRUE) 
+buildDataFromGraph(keggdata.graph=graph,databaseDir=tmpdir,internalDir=FALSE,matrices="diffusion",normality="diffusion",niter=1000)
+fella.data<-loadKEGGdata(databaseDir=tmpdir,internalDir=FALSE,loadMatrix="diffusion")#use 10,000 iterations 
+fella.data
+cat(getInfo(fella.data))
+```
+Setting background metabolite KEGG IDs
+```{r}
+background<-c("C01152","C02494","C00587","C01035","C00156","C02835","C16741","C02656","C00147","C00212",
+              "C00179","C00041","C00956","C05145","C00062","C00402","C08261","C00180","C01672","C00114",
+              "C00307","C00327","C02291","C00475","C00055","C01181","C00330","C00334","C00025","C00064",
+              "C00051","C00242","C00387","C01586","C00388","C00135","C00860","C00262","C00954","C20635",
+              "C00637","C00294","C00407","C01717","C00328","C00318","C00355","C03299","C00123","C01727",
+              "C00073","C00170","C02714","C12989","C01046","C03626","C03793","C02567","C00153","C00455",
+              "C00253","C02571","C21016","C00077","C01879","C04227","C00864","C00079","C02735","C00588",
+              "C00148","C00134","C00534","C00255","C00021","C00019","C08277","C00065","C00315","C00750",
+              "C00378","C01081","C00188","C00078","C00483","C00082","C00183")
+```
+Running analyses for 8 metabolites consistently different across all tissues excluding kynurenate
+```{r}
+SDmz<-AllTissuemz[AllTissuemz != "KYNURENATE"]
+SDmz<-mz_list%>%filter(Metabolite%in%SDmz)%>%pull(KEGG.ID)
+
+analysis.SDmz <- enrich(compounds = SDmz, compoundsBackground = background, 
+                          data = fella.data, method = 'diffusion', approx = "simulation", niter=10000)
+results_SDmz<-generateResultsTable(object=analysis.SDmz,data=fella.data,nlimit=1000)
+paths_SDmz<-results_SDmz%>%filter(Entry.type=="pathway")
+paths_SDmz$FDR<-p.adjust(paths_SDmz$p.score,method="fdr")
+paths_SDmz<-paths_SDmz%>%filter(FDR<.05)
+
+getExcluded(analysis.SDmz)
+```
+Write out results tables
+```{r}
+write.csv(results_SDmz,"output/03_FELLA_Results.csv",row.names=F)
+write.csv(paths_SDmz,"output/03_FELLA_pathways.csv",row.names=F)
+```

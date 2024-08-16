@@ -1,0 +1,6 @@
+"KEGG.id","Entry.type","KEGG.name","p.score","FDR"
+"dme00280","pathway","Valine, leucine and isoleucine degradation - ...",0.00199030944625408,0.00961224212812167
+"dme00290","pathway","Valine, leucine and isoleucine biosynthesis -...",0.00768979370249734,0.00961224212812167
+"dme00970","pathway","Aminoacyl-tRNA biosynthesis - Drosophila mela...",0.00768979370249734,0.00961224212812167
+"dme02010","pathway","ABC transporters - Drosophila melanogaster (f...",0.0070898479913138,0.00961224212812167
+"dme04150","pathway","mTOR signaling pathway - Drosophila melanogas...",0.0292878393051032,0.0292878393051032

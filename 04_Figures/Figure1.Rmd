@@ -1,0 +1,93 @@
+---
+title:   "A doublesex model for reduced dimorphism - Figure 1"
+output:   html_notebook
+by:       R. Coig
+updated:  8/15/24
+---
+Notebook Summary: GGPlot code for Figure 1
+```{r,load required libraries}
+library(ggplot2)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_results/PCA_by_Tissue.data')
+```
+Plotting Figure 1A
+```{r, plotting head tissue PCA}
+interaction_factors <- factor(interaction(Head_Chromosome,Head_Dimorphism), 
+                              levels = c("XX.G", "XX.V", "XY.V", "XY.G"))
+
+Fig1A<-fviz_pca_ind(pca_head,
+             col.ind = factor(interaction_factors,labels=c("XX-3G", "XX-VSC", "XY-VSC", "XY-3G")),
+             palette = c("brown",  "darkorange", "darkorange", "brown"),
+             addEllipses = TRUE, # Concentration ellipses
+             axes = c(1,2),
+             ellipse.type = "confidence",
+             legend.title = "",
+             repel = TRUE,
+             label = "none",
+             title = "Head")+
+  theme(plot.title = element_text(hjust = 0.5),legend.position = "none",
+        panel.background = element_rect(fill = "white"))
+
+
+Fig1A +
+    scale_shape_manual(values = c(17, 17, 15, 15)) + # Specify shapes: 17 for triangle, 15 for square
+ xlab(paste0("PC1 (", round(Head_screemet.data[1]$PC1[2],3)*100, "%)")) +
+  ylab(paste0("PC2 (", round(Head_screemet.data[2]$PC2[2],3)*100, "%)"))
+
+
+ggsave("../Figures/Fig1A.jpg", width = 3, height = 3)
+```
+Plotting Figure 1B
+```{r, plotting thorax tissue PCA}
+
+interaction_factors <- factor(interaction(Thorax_Chromosome,Thorax_Dimorphism), 
+                              levels = c("XX.G", "XX.V", "XY.V", "XY.G"))
+Fig1B<-fviz_pca_ind(pca_thorax,
+             col.ind = factor(interaction_factors,labels=c("XX-3G", "XX-VSC", "XY-VSC", "XY-3G")),
+             palette = c("brown",  "darkorange", "darkorange", "brown"),
+             addEllipses = TRUE, # Concentration ellipses
+             axes = c(1,2),
+             ellipse.type = "confidence",
+             legend.title = "",
+             repel = TRUE,
+             label = "none",
+             title = "Thorax")+
+  theme(plot.title = element_text(hjust = 0.5),legend.position = "none", 
+        panel.background = element_rect(fill = "white"))
+
+
+Fig1B + scale_shape_manual(values = c(17, 17, 15, 15)) +
+ xlab(paste0("PC1 (", round(Thorax_screemet.data[1]$PC1[2],3)*100, "%)")) +
+  ylab(paste0("PC2 (", round(Thorax_screemet.data[2]$PC2[2],3)*100, "%)"))
+
+ggsave("../Figures/Fig1B.jpg", width = 3, height = 3)
+```
+Plotting Figure 1C
+```{r, plotting abdomen tissue PCA}
+interaction_factors <- factor(interaction(Abdomen_Chromosome,Abdomen_Dimorphism), 
+                              levels = c("XX.G", "XX.V", "XY.V", "XY.G"))
+
+Fig1C<-fviz_pca_ind(pca_abdomen,
+             col.ind = factor(interaction_factors,labels=c("XX-3G", "XX-VSC", "XY-VSC", "XY-3G")),
+             palette = c("brown",  "darkorange", "darkorange", "brown"),
+             addEllipses = TRUE, # Concentration ellipses
+             axes = c(1,2),
+             ellipse.type = "confidence",
+             legend.title = "",
+             repel = TRUE,
+             label = "none",
+             title = "Abdomen")+
+ theme(plot.title = element_text(hjust = 0.5),legend.position = "right", 
+        legend.key.size = unit(2,"lines"),panel.background = element_rect(fill = "white"))
+
+
+Fig1C +
+    scale_shape_manual(values = c(17, 17, 15, 15)) +
+ xlab(paste0("PC1 (", round(Abdomen_screemet.data[1]$PC1[2],3)*100, "%)")) +
+  ylab(paste0("PC2 (", round(Abdomen_screemet.data[2]$PC2[2],3)*100, "%)"))
+
+ggsave("../_plots/Fig1C.jpg", width = 4.5, height = 3)
+```

@@ -1,0 +1,113 @@
+---
+title:   "A doublesex model for reduced dimorphism - Figure 2 and Supplementary Figure 3"
+output:   html_notebook
+by:       R. Coig
+updated:  8/15/24
+---
+Notebook Summary: GGPlot code for Figure 2 and Supplementary Figure 3
+```{r,load required libraries}
+library(ggplot2)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_results/Figure2.data')
+```
+Figure 2A:Density plots of effect sizes for 3G and VSC by tissue for SD metabolites. Plot is on log scale.
+```{r}
+Fig2A<-ggplot(dist_melt_sig, aes(abs(value), fill = variable)) +
+  geom_density(alpha = 0.7)+
+  facet_wrap(~ Ttype, nrow=3)+
+  xlab("Absolute Sex Difference Effect Size (log10)")+
+  scale_x_continuous(trans="log10",breaks=c(.1,1,10),labels=c(.1,1,10))+
+  geom_vline(data = ES_SDmz_summary, aes(xintercept = mean, color = variable))+
+  geom_vline(data = ES_SDmz_summary, aes(xintercept = median, color = variable),linetype="dashed")+
+  guides(color="none")+
+  scale_fill_manual(values=c("brown", "darkorange"),name="",labels=c("diff_3G" = "3G", "diff_VSC" = "VSC"))+
+  scale_color_manual(values=c("brown", "darkorange"))+
+  theme_classic()+
+  theme(legend.position=c(.1,.9))
+Fig2A
+
+ggsave("../_plots/Fig2A.jpg", width = 5, height = 6)
+```
+Figure S3:Density plots of effect sizes for 3G and VSC by tissue for all metabolites. Plot is on log scale.
+```{r}
+FigS3<-ggplot(dist_melt, aes(abs(value), fill = variable)) +
+  geom_density(alpha = 0.7)+
+  facet_wrap(~ Ttype, nrow=3)+
+  xlab("Absolute Sex Difference Effect Size (log10)")+
+  scale_x_continuous(trans="log10",breaks=c(.1,1,10),labels=c(.1,1,10))+
+  geom_vline(data = ES_allmz_summary, aes(xintercept = mean, color = variable))+
+  geom_vline(data = ES_allmz_summary, aes(xintercept = median, color = variable),linetype="dashed")+
+  guides(color="none")+
+  scale_fill_manual(values=c("brown", "darkorange"),name="",labels=c("diff_3G" = "3G", "diff_VSC" = "VSC"))+
+  scale_color_manual(values=c("brown", "darkorange"))+
+  theme_classic()+
+  theme(legend.position=c(.1,.9))
+FigS3
+
+ggsave("../_plots/FigS3.jpg", width = 5, height = 6)
+```
+Figure 2B:Effect sizes for metabolites higher in XX flies 
+```{r}
+Fig2B<-ggplot(TukmeltplotXX,aes(x = diffgroup, y = absdiff),group = Metabolite) +
+  geom_text(data=TukmeltplotXX%>%filter(diffgroup=="3G"),
+           aes(label = psig3G2) , hjust = 1, vjust = .5, nudge_x = -.15,
+            fontface = "plain", color = "#888888", size = 4,alpha=.5) +
+  geom_text(data=TukmeltplotXX%>%filter(Metabolite=="KYNURENATE"&diffgroup=="VSC"),
+           aes(label = psigVSC), hjust = 0, vjust = .5, nudge_x = 0.15,
+            fontface = "plain", color = "blue", size = 4,alpha=.5) +
+  geom_line(data=TukmeltplotXX%>%filter(Metabolite!="KYNURENATE"),aes(group=Metabolite,alpha=0.2)) +
+  scale_fill_manual(values=c("brown", "darkorange"),labels = c("3G", "VSC"))+
+  geom_line(data=TukmeltplotXX%>%filter(Metabolite=="KYNURENATE"),
+            aes(group=Metabolite,alpha=0.2),color="blue") +
+  geom_point(data=TukmeltplotXX%>%filter(Metabolite!="KYNURENATE"),
+             aes(fill=diffgroup),stroke=.5,color="black",size=4,alpha=.75,pch=23) +  
+  geom_point(data=TukmeltplotXX%>%filter(Metabolite=="KYNURENATE"),
+             aes(fill=diffgroup),color="blue",stroke=.5,size=4,alpha=.75,pch=25) +     
+  facet_wrap(~ Ttype)+
+  theme(legend.position = 'none') +
+  ylab("SD Effect Size (log10)")+
+  scale_y_continuous(trans="log10",breaks=c(0,.1,1),labels=c(0,.1,1),limits = c(0.03,1))+ 
+  scale_x_discrete(labels = c("3G", "VSC")) + # Rename x-axis labels
+  xlab("")+
+  ggtitle(bquote("Metabolites higher in 3G-XX by Tissue"))+
+  theme(legend.position = "none")+
+  guides(fill = "none",color="none",alpha="none")+  
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(axis.text.x=element_text(size=12, color="black"))+
+  geom_text(data = dat_text_XX,mapping = aes(x = 1, y = 0.9, label = label),hjust = -0.4,vjust = 0)
+Fig2B
+
+ggsave("../_plots/Fig2B.jpg", width = 5, height = 3)
+```
+Figure 2C:Effect sizes for metabolites higher in XY flies 
+```{r}
+Fig2C<-ggplot(TukmeltplotXY, 
+              aes(x = diffgroup, y = absdiff), 
+              group = Metabolite) +
+  geom_text(data=TukmeltplotXY%>%filter(diffgroup=="3G"&psigVSC=="ns"&psig3G=="*"),
+           aes(label = psig3G2) , hjust = 1, vjust = .5, nudge_x = -.15,
+            fontface = "plain", color = "#888888", size = 4,alpha=.5) +
+  geom_line(data=TukmeltplotXY,
+            aes(group=Metabolite,alpha=0.2)) +
+  geom_point(aes(fill=diffgroup),stroke=.5,color="black",size=4,alpha=.75,pch=23) +
+  scale_fill_manual(values=c("brown", "darkorange"))+
+  facet_wrap(~ Ttype)+
+  theme(legend.position = 'none') +
+  ylab("SD Effect Size (log10)")+
+  xlab("")+
+  scale_y_continuous(trans="log10",breaks=c(0,.1,1),labels=c(0,.1,1),limits = c(0.03,1))+ scale_x_discrete(labels = c("3G", "VSC")) + # Rename x-axis labels
+  ggtitle(bquote("Metabolites higher in 3G-XY by Tissue"))+
+  theme(legend.position = "none")+
+  guides(fill = "none",color="none",alpha="none")+  
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme(axis.text.x=element_text(size=12, color="black"))+
+  geom_text(data = dat_text_XY,mapping = aes(x = 1, y = 0.9, label = label),hjust = -0.4,vjust = 0)
+Fig2C
+
+ggsave("../_plots/Fig2C.jpg", width = 5, height = 3)
+```

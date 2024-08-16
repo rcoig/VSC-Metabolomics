@@ -1,0 +1,309 @@
+"KEGG.id","Entry.type","KEGG.name","p.score"
+"dme00280","pathway","Valine, leucine and isoleucine degradation - ...",0.00199030944625408
+"dme00290","pathway","Valine, leucine and isoleucine biosynthesis -...",0.00768979370249734
+"dme00970","pathway","Aminoacyl-tRNA biosynthesis - Drosophila mela...",0.00768979370249734
+"dme02010","pathway","ABC transporters - Drosophila melanogaster (f...",0.0070898479913138
+"dme04150","pathway","mTOR signaling pathway - Drosophila melanogas...",0.0292878393051032
+"M00019","module","Valine/isoleucine biosynthesis, pyruvate => v...",0.0071898389431777
+"M00036","module","Leucine degradation, leucine => acetoacetate ...",0.00109039087947883
+"M00570","module","Isoleucine biosynthesis, threonine => 2-oxobu...",0.00479005609844376
+"1.1.1.178","enzyme","3-hydroxy-2-methylbutyryl-CoA dehydrogenase",0.0402868440101339
+"1.14.11.1","enzyme","gamma-butyrobetaine dioxygenase",0.030587721679334
+"1.2.4.4","enzyme","3-methyl-2-oxobutanoate dehydrogenase (2-meth...",0.0248882374230909
+"1.3.8.4","enzyme","isovaleryl-CoA dehydrogenase",0.0189887712631198
+"2.1.2.9","enzyme","methionyl-tRNA formyltransferase",0.036587178791169
+"2.3.1.168","enzyme","dihydrolipoyllysine-residue (2-methylpropanoy...",0.0272880202678248
+"2.3.1.7","enzyme","carnitine O-acetyltransferase",0.0387869797321751
+"2.6.1.42","enzyme","branched-chain-amino-acid transaminase",0.000390454216431382
+"2.7.1.153","enzyme","phosphatidylinositol-4,5-bisphosphate 3-kinas...",0.0261881197973218
+"2.7.10.1","enzyme","receptor protein-tyrosine kinase",0.0476861744480637
+"2.7.11.26","enzyme","tau-protein kinase",0.0302877488237423
+"2.7.11.31","enzyme","[hydroxymethylglutaryl-CoA reductase (NADPH)]...",0.0271880293159609
+"3.1.3.67","enzyme","phosphatidylinositol-3,4,5-trisphosphate 3-ph...",0.0266880745566413
+"3.4.22.1","enzyme","cathepsin B",0.038986961635903
+"3.4.23.5","enzyme","cathepsin D",0.038986961635903
+"4.2.1.18","enzyme","methylglutaconyl-CoA hydratase",0.0022902823018458
+"6.1.1.17","enzyme","glutamate---tRNA ligase",0.00588995656894682
+"6.1.1.22","enzyme","asparagine---tRNA ligase",0.0336874411871154
+"6.1.1.4","enzyme","leucine---tRNA ligase",0.00489004705030766
+"6.1.1.5","enzyme","isoleucine---tRNA ligase",0.00578996561708292
+"6.1.1.6","enzyme","lysine---tRNA ligase",0.039086952587767
+"6.4.1.4","enzyme","methylcrotonoyl-CoA carboxylase",0.00259025515743751
+"7.1.2.2","enzyme","H+-transporting two-sector ATPase",0.0403868349619978
+"7.6.2.2","enzyme","ABC-type xenobiotic transporter",0.0070898479913138
+"7.6.2.3","enzyme","ABC-type glutathione-S-conjugate transporter",0.0070898479913138
+"7.6.2.4","enzyme","ABC-type fatty-acyl-CoA transporter",0.0422866630474122
+"R00239","reaction","ATP:L-glutamate 5-phosphotransferase",0.0344873688020268
+"R00243","reaction","L-glutamate:NAD+ oxidoreductase (deaminating)",0.0331874864277959
+"R00245","reaction","L-glutamate gamma-semialdehyde:NAD+ oxidoredu...",0.0422866630474122
+"R00248","reaction","L-glutamate:NADP+ oxidoreductase (deaminating...",0.034287386898299
+"R00254","reaction","N-carbamyl-L-glutamate amidohydrolase",0.0486860839667028
+"R00262","reaction","L-threo-3-methylaspartate carboxy-aminomethyl...",0.0290878574013753
+"R00268","reaction","oxalosuccinate carboxy-lyase (2-oxoglutarate-...",0.0268880564603692
+"R00372","reaction","glycine:2-oxoglutarate aminotransferase",0.0283879207383279
+"R00411","reaction","N-succinyl-L-glutamate amidohydrolase",0.0241883007600434
+"R00474","reaction","2-oxoglutarate:glyoxylate succinaldehydetrans...",0.047386201592472
+"R00895","reaction","L-cysteine:2-oxoglutarate aminotransferase",0.0359872330799856
+"R00942","reaction","tetrahydrofolate:L-glutamate gamma-ligase (AD...",0.0372871154542164
+"R01021","reaction","ATP:choline phosphotransferase",0.0465862739775606
+"R01088","reaction","L-leucine:NAD+ oxidoreductase (deaminating)",0.00169033659066237
+"R01090","reaction","L-leucine:2-oxoglutarate aminotransferase",9.0481360839667e-05
+"R01651","reaction","4-methyl-2-oxopentanoate:NAD+ oxidoreductase ...",0.0102895584509591
+"R01652","reaction","4-Methyl-2-oxopentanoate + CO2 <=> (2S)-2-Iso...",0.00179032754252627
+"R01684","reaction","taurine:2-oxoglutarate aminotransferase",0.0231883912414043
+"R01702","reaction","4-methyl-2-oxopentanoate:[dihydrolipoyllysine...",0.00449008324285193
+"R02085","reaction","(S)-3-hydroxy-3-methylglutaryl-CoA hydro-lyas...",0.0423866539992762
+"R02196","reaction","L-isoleucine:NAD+ oxidoreductase(deaminating)",0.0121893865363735
+"R02197","reaction","L-isoleucine:oxygen oxidoreductase (deaminati...",0.0252882012305465
+"R02199","reaction","L-isoleucine:2-oxoglutarate aminotransferase",9.0481360839667e-05
+"R02237","reaction","7,8-dihydropteroate:L-glutamate ligase (ADP-f...",0.046186310170105
+"R02274","reaction","5-aminopentanoate:2-oxoglutarate aminotransfe...",0.0157890608034745
+"R02285","reaction","N-formimino-L-glutamate formiminohydrolase",0.0494860115816142
+"R02397","reaction","4-trimethylammoniobutanoate,2-oxoglutarate:ox...",0.0196887079261672
+"R02433","reaction","L-cysteate:2-oxoglutarate aminotransferase",0.0286878935939196
+"R02444","reaction","flavanone,2-oxoglutarate:oxygen oxidoreductas...",0.0420866811436844
+"R02619","reaction","3-sulfino-L-alanine:2-oxoglutarate aminotrans...",0.0310876764386537
+"R02663","reaction","2-Methylpropanoyl-CoA <=> Branched chain fatt...",0.0231883912414043
+"R02700","reaction","5-hydroxy-L-tryptophan:2-oxoglutarate aminotr...",0.0255881740861382
+"R02734","reaction","N-succinyl-LL-2,6-diaminoheptanedioate amidoh...",0.0106895222584148
+"R02773","reaction","dTDP-4-amino-4,6-dideoxy-D-glucose:2-oxogluta...",0.0142891965255157
+"R03009","reaction","(gibberellin-20),2-oxoglutarate:oxygen oxidor...",0.0334874592833876
+"R03122","reaction","cyclomaltodextrin dextrin-hydrolase (decycliz...",0.0439865092290989
+"R03171","reaction","(S)-3-methyl-2-oxopentanoate:NAD+ 2-oxidoredu...",0.0262881107491857
+"R03174","reaction","(S)-2-methylbutanoyl-CoA:enzyme N6-(dihydroli...",0.0366871697430329
+"R03175","reaction","(S)-2-Methylbutanoyl-CoA <=> Branched chain f...",0.0086897032211365
+"R03189","reaction","5-formyltetrahydrofolate:L-glutamate N-formim...",0.0434865544697792
+"R03640","reaction","flavanone,2-oxoglutarate:oxygen oxidoreductas...",0.0424866449511401
+"R03651","reaction","L-glutamate:tRNA(Gln) ligase (AMP-forming)",0.0179888617444807
+"R03656","reaction","L-isoleucine:tRNA(Ile) ligase (AMP-forming)",0.00928964893231993
+"R03657","reaction","L-leucine:tRNA(Leu) ligase (AMP-forming)",0.00808975750995296
+"R03737","reaction","(6S)-6beta-hydroxyhyoscyamine,2-oxoglutarate:...",0.0418866992399565
+"R03806","reaction","(gibberellin-44),2-oxoglutarate:oxygen oxidor...",0.0418866992399565
+"R03807","reaction","(gibberellin-19),2-oxoglutarate:oxygen oxidor...",0.0427866178067318
+"R03812","reaction","L-hyoscyamine,2-oxoglytarate:oxygen oxidoredu...",0.0323875588128845
+"R04001","reaction","3-isopropylmalate hydro-lyase",0.0149891331885632
+"R04029","reaction","N6-acetyl-L-lysine:2-oxoglutarate aminotransf...",0.0155890788997466
+"R04051","reaction","3-Phosphonopyruvate + L-Glutamate <=> 2-Amino...",0.00838973036554467
+"R04097","reaction","3-methylbutanoyl-CoA:enzyme N6-(dihydrolipoyl...",0.038986961635903
+"R04098","reaction","3-Methylbutanoyl-CoA <=> Branched chain fatty...",0.00169033659066237
+"R04173","reaction","3-phosphoserine:2-oxoglutarate aminotransfera...",0.0191887531668476
+"R04188","reaction","L-3-amino-isobutanoate:2-oxoglutarate aminotr...",0.018788789359392
+"R04217","reaction","N2-succinyl-L-ornithine:2-oxoglutarate 5-amin...",0.0244882736156352
+"R04225","reaction","(S)-3-methyl-2-oxopentanoate:[dihydrolipoylly...",0.00748981179876942
+"R04241","reaction","tetrahydropteroyl-gamma-polyglutamate:L-gluta...",0.0334874592833876
+"R04242","reaction","tetrahydropteroyl-poly-gamma-glutamate gamma-...",0.0474861925443359
+"R04276","reaction","leucocyanidin,2-oxoglutarate:oxygen oxidoredu...",0.0469862377850163
+"R04426","reaction","(2R,3S)-3-isopropylmalate:NAD+ oxidoreductase",0.00968961273977566
+"R04438","reaction","dTDP-4-amino-4,6-dideoxy-D-galactose:2-oxoglu...",0.0110894860658704
+"R04467","reaction","N6-Acetyl-LL-2,6-diaminoheptanedioate + 2-Oxo...",0.01158944082519
+"R04475","reaction","N-succinyl-L-2,6-diaminoheptanedioate:2-oxogl...",0.00948963083604774
+"R04529","reaction","UDP-4-amino-4,6-dideoxy-N-acetyl-alpha-D-gluc...",0.0121893865363735
+"R04776","reaction","phenylacetyl-CoA:L-glutamine alpha-N-phenylac...",0.0416867173362287
+"R05068","reaction","(R)-2,3-dihydroxy-3-methylpentanoate:NADP+ ox...",0.00728982989504161
+"R05069","reaction","(S)-2-aceto-2-hydroxybutanoate:NADP+ oxidored...",0.00608993847267463
+"R05070","reaction","(R)-2,3-dihydroxy-3-methylpentanoate hydro-ly...",0.00349017372421277
+"R05071","reaction","(S)-2-acetolactate methylmutase",0.0177888798407529
+"R05085","reaction","O-phospho-4-hydroxy-L-threonine:2-oxoglutarat...",0.0158890517553384
+"R05097","reaction","(gibberellin-44),2-oxoglutarate:oxygen oxidor...",0.0333874683315237
+"R05207","reaction","Leukotriene E4 + L-Glutamate <=> Leukotriene ...",0.0426866268548679
+"R05229","reaction","Deacetylcephalosporin C + Succinate + CO2 <=>...",0.0379870521172639
+"R05356","reaction","2-hydroxy-cyclohexan-1-one amidohydrolase",0.0367871606948968
+"R05466","reaction","deoxyamidinoproclavaminate,2-oxoglutarate:oxy...",0.0469862377850163
+"R05469","reaction","dihydroclavaminate,2-oxoglutarate:oxygen oxid...",0.0482861201592472
+"R05507","reaction","6-aminohexanoate:2-oxogutarate aminotransfera...",0.0107895132102787
+"R05518","reaction","dTDP-4-dehydro-6-deoxy-alpha-D-glucopyranose ...",0.043686536373507
+"R05578","reaction","L-glutamate:tRNA(Glu) ligase (AMP-forming)",0.0171889341295693
+"R06322","reaction","(gibberellin-44),2-oxoglutarate:oxygen oxidor...",0.0347873416576185
+"R06323","reaction","(gibberellin-44),2-oxoglutarate:oxygen oxidor...",0.0458863373145132
+"R06332","reaction","Gibberellin A9 <=> Gibberellin A20",0.0468862468331523
+"R06336","reaction","(gibberellin-20),2-oxoglutarate:oxygen oxidor...",0.0374870973579442
+"R06423","reaction","dTDP-3-amino-3,6-dideoxy-alpha-D-glucopyranos...",0.012689341295693
+"R06424","reaction","dTDP-4-dehydro-6-deoxy-alpha-D-glucopyranose:...",0.0213885541078538
+"R06426","reaction","dTDP-3-amino-3,4,6-trideoxy-D-glucose:2-oxogl...",0.0188887803112559
+"R06514","reaction","dTDP-4-dehydro-6-deoxy-alpha-D-glucose 3,5-ep...",0.0361872149837134
+"R06586","reaction","UDP-3-ketoglucose:L-glutamate aminotransferas...",0.00938963988418383
+"R06619","reaction","Gibberellin A4 <=> Gibberellin A1",0.0494860115816142
+"R06631","reaction","dTDP-3-amino-2,3,6-trideoxy-4-keto-D-glucose:...",0.0176888888888888
+"R06977","reaction","L-2,4-diaminobutyrate:2-oxoglutarate 4-aminot...",0.0260881288454579
+"R07186","reaction","mugineic acid,2-oxoglutarate:oxygen oxidoredu...",0.048486102062975
+"R07276","reaction","L-arogenate:2-oxoglutarate aminotransferase",0.0495860025334781
+"R07601","reaction","4-Methyl-2-oxopentanoate + Thiamin diphosphat...",0.00808975750995296
+"R07603","reaction","(S)-3-Methyl-2-oxopentanoic acid + Thiamin di...",0.00948963083604774
+"R07613","reaction","LL-2,6-diaminoheptanedioate:2-oxoglutarate am...",0.016389006514658
+"R07659","reaction","UDP-L-Ara4O + L-Glutamate <=> UDP-L-Ara4N + 2...",0.0106895222584148
+"R07660","reaction","10-Formyltetrahydrofolate + UDP-L-Ara4N <=> T...",0.0494860115816142
+"R08050","reaction","Ectoine + 2-Oxoglutarate + Oxygen <=> 5-Hydro...",0.0440865001809628
+"R08254","reaction","Isoniazid + 2-Oxoglutarate <=> Isoniazid alph...",0.037787070213536
+"R08566","reaction","4-methyl-2-oxopentanoate:ferredoxin oxidoredu...",0.00918965798045602
+"R08567","reaction","(S)-3-methyl-2-oxopentanoate:ferredoxin oxido...",0.0277879750271444
+"R08664","reaction","L-leucine,NADPH:oxygen oxidoreductase (N-hydr...",0.00818974846181686
+"R08927","reaction","dTDP-3,4-dioxo-2,6-dideoxy-D-glucose <=> dTDP...",0.0423866539992762
+"R08931","reaction","dTDP-4-amino-2,3,4,6-tetradeoxy-D-glucose:2-o...",0.0155890788997466
+"R09401","reaction","L-glutamate:coenzyme gamma-F420-2 (ADP-formin...",0.0336874411871154
+"R09403","reaction","L-isoleucine,[reduced NADPH---hemoprotein red...",0.0248882374230909
+"R09594","reaction","tetrahydromethanopterin:alpha-L-glutamate lig...",0.0442864820846906
+"R09697","reaction","UDP-N-acetylglucosamine hydro-lyase (invertin...",0.0447864368440101
+"R09778","reaction","LysW-gamma-L-lysine:2-oxoglutarate 6-aminotra...",0.0155890788997466
+"R09824","reaction","dTDP-3-amino-3,6-dideoxy-alpha-D-galactopyran...",0.0135892598624683
+"R09825","reaction","UDP-4-amino-4,6-dideoxy-N-acetyl-beta-L-altro...",0.0108895041621426
+"R09904","reaction","dTDP-4-dehydro-6-deoxy-alpha-D-glucopyranose:...",0.0212885631559899
+"R10052","reaction","(2R,3S)-3-isopropylmalate:NAD+ oxidoreductase",0.00748981179876942
+"R10141","reaction","UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-g...",0.0107895132102787
+"R10157","reaction","1-deoxypentalenic acid,2-oxoglutarate:oxygen ...",0.0363871968874412
+"R10170","reaction","(2R,3S)-3-isopropylmalate hydro-lyase (2-isop...",0.031787613101701
+"R10210","reaction","2-Oxoglutaryl-CoA + H2O <=> 2-Oxoglutarate + ...",0.0474861925443359
+"R10415","reaction","(3S,5S)-carbapenam-3-carboxylate,2-oxoglutara...",0.0386869887803112
+"R10460","reaction","GDP-4-amino-4,6-dideoxy-alpha-D-mannose:2-oxo...",0.0121893865363735
+"R10677","reaction","citrate:L-glutamate ligase (ADP-forming)",0.0351873054650742
+"R10678","reaction","N-acetyl-L-aspartate:L-glutamate ligase (ADP,...",0.038986961635903
+"R10687","reaction","N-Acetylaspartylglutamate + H2O <=> N-Acetyl-...",0.0432865725660514
+"R10688","reaction","N-Acetylaspartylglutamylglutamate + H2O <=> N...",0.0391869435396309
+"R10693","reaction","N-acetyl-L-aspartyl-L-glutamate:L-glutamate l...",0.0366871697430329
+"R10698","reaction","kanosamine-6-phosphate:2-oxoglutarate aminotr...",0.00988959464350347
+"R10724","reaction","(2-aminoethyl)phosphonate,2-oxoglutarate:oxyg...",0.0131892960550127
+"R10759","reaction","3-Hydroxyisovaleryl-CoA <=> 3-Hydroxyisovaler...",0.0142891965255157
+"R10943","reaction","3-{[(2E)-4-amino-4-oxobut-2-enoyl]amino}-L-al...",0.000990399927614923
+"R10944","reaction","3-{[(2E)-4-amino-4-oxobut-2-enoyl]amino}-L-al...",0.000990399927614923
+"R10991","reaction","2-aminobutanoate:2-oxoglutarate aminotransfer...",0.000290463264567477
+"R11260","reaction","Starch <=> Cyclomaltodextrin",0.0445864549402823
+"R11409","reaction","GDP-4-dehydro-alpha-D-rhamnose 3-hydro-lyase",0.0195887169743033
+"R11655","reaction","N-[(2S)-2-amino-2-carboxyethyl]-L-glutamate:N...",0.024788246471227
+"R11705","reaction","O-phospho-L-serine:L-glutamate N-(2S)-2-amino...",0.0350873145132103
+"R11963","reaction","L-Glutamate + 8-Carboxy-8-demethylriboflavin ...",0.0375870883098082
+"R12216","reaction","glutarate,2-oxoglutarate:oxygen oxidoreductas...",0.0403868349619978
+"R12272","reaction","UDP-N-acetylmuramoyl-L-alanine---L-glutamate ...",0.033087495475932
+"R12410","reaction","L-Propargylglycine + L-Glutamate <=> gamma-L-...",0.0168889612739776
+"R12411","reaction","gamma-L-glutamyl-L-propargylglycine,2-oxoglut...",0.0086897032211365
+"R12412","reaction","L-gamma-Glutamyl-(3R)-L-beta-ethynylserine + ...",0.0235883550488599
+"R12553","reaction","UDP-2-acetamido-2,6-dideoxy-beta-L-arabino-he...",0.0300877669200145
+"R12554","reaction","UDP-2-acetamido-2,6-dideoxy-beta-L-arabino-he...",0.0237883369525878
+"R12555","reaction","UDP-2-acetamido-4-dehydro-2,6-dideoxyglucose ...",0.0319875950054289
+"R12606","reaction","UDP-2-acetamido-2,6-dideoxy-beta-L-arabino-he...",0.0105895313065508
+"R12826","reaction","3-epihydroxy-2'-deoxymugineic acid,2-oxogluta...",0.048486102062975
+"R13098","reaction","N-Acetyl-L-glutamate <=> L-Glutamate",0.0465862739775606
+"R13148","reaction","L-Glutamate 5-semialdehyde + NADP+ + H2O <=> ...",0.0481861292073833
+"C00025","compound","L-Glutamate",0.0184888165038002
+"C00026","compound","2-Oxoglutarate",0.00309020991675715
+"C00123","compound","L-Leucine",0.000190472312703572
+"C00175","compound","Cobalt ion",0.0144891784292435
+"C00233","compound","4-Methyl-2-oxopentanoate",0.000190472312703572
+"C00243","compound","Lactose",0.0143891874773796
+"C00407","compound","L-Isoleucine",0.000290463264567477
+"C00470","compound","Pectate",0.0309876854867898
+"C00487","compound","Carnitine",0.0105895313065508
+"C00492","compound","Raffinose",0.0284879116901918
+"C00666","compound","LL-2,6-Diaminoheptanedioate",0.0292878393051032
+"C00671","compound","(S)-3-Methyl-2-oxopentanoic acid",0.000790418023887113
+"C00859","compound","Gibberellin A1",0.0399868711545422
+"C00865","compound","Phospholipid",0.00529001085776328
+"C00973","compound","Cyclomaltodextrin",0.0134892689106044
+"C01177","compound","Inositol 1-phosphate",0.0232883821932682
+"C01181","compound","4-Trimethylammoniobutanoate",0.018788789359392
+"C01222","compound","GDP-4-dehydro-6-deoxy-D-mannose",0.0367871606948968
+"C01417","compound","Cyanate",0.00898967607672821
+"C01487","compound","D-Allose",0.00678987513572208
+"C01641","compound","tRNA(Glu)",0.0312876583423815
+"C01644","compound","tRNA(Ile)",0.00928964893231993
+"C01645","compound","tRNA(Leu)",0.00808975750995296
+"C01674","compound","Chitobiose",0.0149891331885632
+"C01851","compound","Scopolamine",0.0418866992399565
+"C01935","compound","Maltodextrin",0.0319875950054289
+"C01946","compound","Oleandomycin",0.0492860296778864
+"C02034","compound","Gibberellin A19",0.0421866720955483
+"C02035","compound","Gibberellin A20",0.0398868802026782
+"C02046","compound","L-Hyoscyamine",0.0379870521172639
+"C02047","compound","L-Leucyl-tRNA",0.00808975750995296
+"C02273","compound","Digalacturonate",0.0216885269634455
+"C02378","compound","6-Aminohexanoate",0.0165889884183858
+"C02631","compound","2-Isopropylmaleate",0.0354872783206659
+"C02798","compound","3-Phosphonopyruvate",0.0283879207383279
+"C02939","compound","3-Methylbutanoyl-CoA",0.00738982084690551
+"C02987","compound","L-Glutamyl-tRNA(Glu)",0.0312876583423815
+"C03127","compound","L-Isoleucyl-tRNA(Ile)",0.00928964893231993
+"C03217","compound","2-Hydroxy-3-oxoadipate",0.047386201592472
+"C03232","compound","3-Phosphonooxypyruvate",0.0263881017010496
+"C03273","compound","5-Oxopentanoate",0.018788789359392
+"C03325","compound","(6S)-Hydroxyhyoscyamine",0.0363871968874412
+"C03415","compound","N2-Succinyl-L-ornithine",0.0417867082880926
+"C03541","compound","THF-polyglutamate",0.042586635903004
+"C03618","compound","L-threo-3-Methylaspartate",0.0391869435396309
+"C03972","compound","2,3,4,5-Tetrahydrodipicolinate",0.0468862468331523
+"C04181","compound","3-Hydroxy-3-methyl-2-oxobutanoic acid",0.0351873054650742
+"C04236","compound","(2S)-2-Isopropyl-3-oxosuccinate",0.00359016467607668
+"C04346","compound","dTDP-4-amino-4,6-dideoxy-D-galactose",0.024688255519363
+"C04390","compound","N6-Acetyl-LL-2,6-diaminoheptanedioate",0.0248882374230909
+"C04411","compound","(2R,3S)-3-Isopropylmalate",0.00678987513572208
+"C04421","compound","N-Succinyl-LL-2,6-diaminoheptanedioate",0.00928964893231993
+"C04462","compound","N-Succinyl-2-L-amino-6-oxoheptanedioate",0.0150891241404271
+"C04613","compound","UDP-2-acetamido-4-dehydro-2,6-dideoxyglucose",0.0287878845457835
+"C04630","compound","UDP-2-acetamido-4-amino-2,4,6-trideoxy-alpha-...",0.0371871245023525
+"C05402","compound","Melibiose",0.0215885360115816
+"C05539","compound","N-Acetyl-L-2-amino-6-oxopimelate",0.0219884998190373
+"C05595","compound","4-Hydroxyphenylacetylglutamic acid",0.0416867173362287
+"C05646","compound","5-Hydroxyindolepyruvate",0.0255881740861382
+"C05672","compound","2-Amino-3-phosphonopropanoate",0.00838973036554467
+"C05931","compound","N-Succinyl-L-glutamate",0.0326875316684763
+"C05932","compound","N-Succinyl-L-glutamate 5-semialdehyde",0.0311876673905176
+"C05996","compound","Branched chain fatty acid",0.00519001990589938
+"C06006","compound","(S)-2-Aceto-2-hydroxybutanoate",0.0172889250814332
+"C06007","compound","(R)-2,3-Dihydroxy-3-methylpentanoate",0.00449008324285193
+"C06054","compound","2-Oxo-3-hydroxy-4-phosphobutanoate",0.0226884364820846
+"C06055","compound","O-Phospho-4-hydroxy-L-threonine",0.0445864549402823
+"C06094","compound","Gibberellin A53",0.0408867897213174
+"C06095","compound","Gibberellin A44 diacid",0.0368871516467608
+"C06102","compound","Adipate semialdehyde",0.0231883912414043
+"C06232","compound","Molybdate",0.00898967607672821
+"C06462","compound","Leukotriene F4",0.0426866268548679
+"C06593","compound","epsilon-Caprolactam",0.0367871606948968
+"C06620","compound","dTDP-3,4-dioxo-2,6-dideoxy-D-glucose",0.0363871968874412
+"C06669","compound","(5R)-Carbapen-2-em-3-carboxylate",0.0386869887803112
+"C09332","compound","THF-L-glutamate",0.0372871154542164
+"C11860","compound","Gibberellin A15 open lactone",0.0395869073470865
+"C11907","compound","dTDP-4-oxo-6-deoxy-D-glucose",0.0267880655085052
+"C11908","compound","3,6-Dideoxy-3-oxo-dTDP-D-glucose",0.0153890969960188
+"C12210","compound","UDP-3-ketoglucose",0.0121893865363735
+"C12211","compound","UDP-kanosamine",0.00938963988418383
+"C12213","compound","Kanosamine 6-phosphate",0.0188887803112559
+"C12270","compound","N-Acetylaspartylglutamate",0.046186310170105
+"C14463","compound","(R)-3-Hydroxy-3-methyl-2-oxopentanoate",0.00628992037640244
+"C14819","compound","Fe3+",0.0242882917119073
+"C15501","compound","3-Epihydroxymugineic acid",0.048486102062975
+"C15974","compound","3-Methyl-1-hydroxybutyl-ThPP",0.034287386898299
+"C15975","compound","[Dihydrolipoyllysine-residue (2-methylpropano...",0.0107895132102787
+"C15978","compound","2-Methyl-1-hydroxybutyl-ThPP",0.0154890879478827
+"C15979","compound","[Dihydrolipoyllysine-residue (2-methylpropano...",0.0113894589214622
+"C15980","compound","(S)-2-Methylbutanoyl-CoA",0.0295878121606949
+"C16153","compound","UDP-L-Ara4N",0.0192887441187115
+"C16155","compound","UDP-L-Ara4O",0.015189115092291
+"C16432","compound","5-Hydroxyectoine",0.0440865001809628
+"C16625","compound","Isoniazid alpha-ketoglutaric acid",0.037787070213536
+"C17255","compound","3-Methylbutyraldehyde oxime",0.00818974846181686
+"C18029","compound","dTDP-3-oxo-2,6-dideoxy-D-glucose",0.0460863192182411
+"C18032","compound","dTDP-4-oxo-2,3,6-trideoxy-D-glucose",0.0218885088671734
+"C19151","compound","Coenzyme F420-3",0.0336874411871154
+"C19491","compound","(E)-2-Methylbutanal oxime",0.0248882374230909
+"C19609","compound","Nickel(2+)",0.00808975750995296
+"C19823","compound","UDP-2-acetamido-2,6-dideoxy-beta-L-arabino-he...",0.0178888707926168
+"C19888","compound","LysW-gamma-L-alpha-aminoadipate 6-semialdehyd...",0.0219884998190373
+"C19889","compound","LysW-gamma-L-lysine",0.0340874049945711
+"C19960","compound","dTDP-3-dehydro-6-deoxy-alpha-D-galactopyranos...",0.0164889974665219
+"C19961","compound","UDP-4-amino-4,6-dideoxy-N-acetyl-beta-L-altro...",0.0225884455302207
+"C20359","compound","UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-g...",0.0227884274339487
+"C20395","compound","UDP-2-acetamido-2-deoxy-alpha-D-ribo-hex-3-ul...",0.0160890336590662
+"C20612","compound","GDP-4-dehydro-3,6-dideoxy-alpha-D-mannose",0.0312876583423815
+"C20638","compound","GDP-4-amino-4,6-dideoxy-alpha-D-mannose",0.0348873326094825
+"C20668","compound","3-Dehydro-D-glucose 6-phosphate",0.0138892327180601
+"C20775","compound","beta-Citryl-L-glutamate",0.0351873054650742
+"C20776","compound","N-Acetylaspartylglutamylglutamate",0.0384870068765834
+"C20827","compound","3-Hydroxyisovalerate",0.0142891965255157
+"C20963","compound","Dapdiamide B",0.000990399927614923
+"C20964","compound","Dapdiamide C",0.000990399927614923
+"C20966","compound","3-{[(2E)-4-Amino-4-oxobut-2-enoyl]amino}-L-al...",0.000390454216431382
+"C21559","compound","N-[(2S)-2-Amino-2-carboxyethyl]-L-glutamate",0.0277879750271444
+"C22053","compound","UDP-N-acetyl-alpha-D-muramoyl-L-alanyl-L-glut...",0.0348873326094825
+"C22138","compound","L-Propargylglycine",0.0264880926529135
+"C22139","compound","gamma-L-Glutamyl-L-propargylglycine",0.0120893955845096
+"C22140","compound","L-gamma-Glutamyl-(3R)-L-beta-ethynylserine",0.0123893684401013
+"C22141","compound","L-beta-Ethynylserine",0.0235883550488599
+"C22261","compound","UDP-2-acetamido-2,6-dideoxy-alpha-D-galactose",0.0319875950054289
+"C22276","compound","UDP-4-amino-4,6-dideoxy-N-acetyl-beta-L-idosa...",0.0231883912414043

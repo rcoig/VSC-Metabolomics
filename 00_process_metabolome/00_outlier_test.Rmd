@@ -1,0 +1,89 @@
+---
+title:   "A doublesex model for reduced dimorphism - Outlier test for sample XXGA4"
+output:   html_notebook
+by:       R. Coig
+updated:  8/16/24
+---
+Notebook Summary: Outlier test for XXGA4, it was reported as an outlier observationally
+```{r,load required libraries}
+library(dplyr)
+library(reshape2)
+library(ggplot2)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_data/scaled_with_outlier.data')
+load('../_data/keys.data')
+```
+Identifying potential outliers within each metabolite using the ‘boxplot.stats’ function in R. This function identifies outliers as values that fall beyond 1.5 times the interquartile range (IQR) from the first and third quartiles. 
+```{r}
+data_All<-as.data.frame(t(mz_log_forpca_all))
+out=c()
+out_ind=c()
+out_freq=c()
+  for(i in mz){
+boxplot(data_All[,i],
+  ylab = "value",
+  main = i
+)
+    out <- boxplot.stats(data_All[,i])$out
+    out_ind <- which(data_All[,i] %in% c(out))
+    out_freq <- c(out_freq,out_ind)
+
+mtext(paste("Outliers: ", paste(out_ind, collapse = ", ")))
+  }
+```
+Number of observed outliers summed for each sample
+```{r}
+freq_list<-as.data.frame(matrix(seq(1:51)))
+colnames(freq_list)<-c("out_freq")
+out_table<-table(factor(out_freq, levels = 1:51))
+freq_list<-data.frame(out_table)
+row.names(freq_list)<-row.names(data_All)
+freq_list$Var1<-NULL #Sample XXGA4 has 8 out of 91 metabolites as compared to the entire group
+```
+Permutation of likelihood for outlier status being as high as 8
+```{r}
+data_test<-data_All
+set.seed(200)
+f1 <- function(df) {  
+            for (i in mz)
+{df[,i]<-sample(df[,i],replace=F)
+}
+out=c()
+out_ind=c()
+out_freq=c()
+out_table=c()
+  for(i in mz){
+    out <- boxplot.stats(df[,i])$out
+    out_ind <- which(df[,i] %in% c(out))
+    out_freq <- c(out_freq,out_ind)
+    out_table <- as.data.frame(table(factor(out_freq, levels = 1:51)))
+    }
+out_table$Freq
+  }
+n <- 10002 # number of times you need to repeat the process
+for (t in 2:n) freq_list[,t] <- f1(data_test)
+```
+Summarizing the number of times that XXGA4 had each outlier value 0-8   
+```{r}
+freq_list$Sample<-row.names(freq_list)
+#Selecting permuted data for XXGA4
+XXGA4<-freq_list%>%filter(Sample=="XXGA4")
+freq_melt<-melt(XXGA4%>%select(-Sample,-Freq))
+XXGA4_Freq<-freq_melt%>%group_by(value)%>%
+  count()
+sum(XXGA4_Freq$n)
+
+```
+Calculating the chance of outliers in null distribution. Sample XXGA4 has 8 outliers, the maximum number of outliers observed. The p-value suggests the sample has significantly more metabolite outliers than all other samples.
+```{r}
+table(freq_melt$value>=8)
+p<-1/10000 #1/10,001 = 1x10E-4 chance that a sample would have 8 outliers
+table(freq_melt$value<1)#2055/10,001 = .2 chance that a sample would have 0 outliers
+```
+Saving out outlier data for Supplementary Figure 1 Plot
+```{r,save out r files}
+save(file='../_results/outlier-permutation.data', freq_list, XXGA4_Freq, p, freq_melt) rm(list=ls())
+```

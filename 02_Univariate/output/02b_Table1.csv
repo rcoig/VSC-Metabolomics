@@ -1,0 +1,7 @@
+"SDGroup","Ttype","SD_meanES","meanES","N","percent"
+"diff_3G","Abdomen",0.22,0.15,30,33
+"diff_3G","Head",0.16,0.13,23,25
+"diff_3G","Thorax",0.14,0.1,33,36
+"diff_VSC","Abdomen",0.08,0.08,1,1
+"diff_VSC","Head",0.1,0.09,1,1
+"diff_VSC","Thorax",0.07,0.06,1,1

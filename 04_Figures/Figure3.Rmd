@@ -1,0 +1,73 @@
+---
+title:   "A doublesex model for reduced dimorphism - Figure 3"
+output:   html_notebook
+by:       R. Coig
+updated:  8/16/24
+---
+Notebook Summary: GGPlot code for Figure 3
+```{r,load required libraries}
+library(dplyr)
+library(VennDiagram)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_results/Figure3.data')
+load('../_results/Tukey_test_results.data')
+```
+
+Fig 3A, Venn diagrams of overlapping features between tissues
+```{r}
+AllTissuemz<-intersect(sig_3Ghead, intersect(sig_3Gthorax, sig_3Gabdomen))
+
+venn_tissue <- list(HEAD=sig_3Ghead,THORAX=sig_3Gthorax,ABDOMEN=sig_3Gabdomen)
+
+venn_tissue <- list(HEAD = sig_3Ghead, THORAX = sig_3Gthorax, ABDOMEN = sig_3Gabdomen)
+
+# Create a Venn diagram
+venn.plot <- venn.diagram(
+  x = venn_tissue,
+  category.names = c("HEAD", "THORAX", "ABDOMEN"),
+  #category.names = c("" , " " , ""),
+  filename = NULL,
+  output = TRUE,
+  cat.fontfamily = "sans",
+  main = "",
+  scaled = F,
+  label.offset = 1  # Adjust this value to move the labels farther away
+)
+
+
+# Plot the Venn diagram and save it
+grid.newpage()
+grid.draw(venn.plot)
+ggsave("../_plots/Fig3A.jpg", plot = venn.plot, width = 2, height = 2, device = "jpeg")
+```
+Fig 3B, Effect sizes of 9 overlapping features between tissues
+```{r}
+SD_results<-Tukey_all_tested%>%filter(Metabolite%in%AllTissuemz)
+VSC_results<-SD_results%>%select(Metabolite,diff_VSC,se_VSC,Ttype)%>%rename(diff=diff_VSC)%>%rename(se=se_VSC)%>%mutate(SDGroup="VSC")
+G3_results<-SD_results%>%select(Metabolite,diff_3G,se_3G,Ttype)%>%rename(diff=diff_3G)%>%rename(se=se_3G)%>%mutate(SDGroup="3G")
+SD_plot<-rbind(VSC_results,G3_results)
+SD_plot <- melt(SD_plot, id.vars = c('Metabolite', 'Ttype', 'SDGroup'))
+SD_plot_wide <- dcast(SD_plot, Metabolite + Ttype + SDGroup ~ variable, value.var = "value")
+
+Fig3B<-ggplot(SD_plot_wide, aes(x = Ttype, y = abs(diff), color = Metabolite)) +
+  geom_point() +
+  geom_line(aes(group=Metabolite)) +
+  #geom_errorbar(aes(ymin = abs(diff) - se, ymax = abs(diff) + se), width = 0.2) +
+  labs(x = "Tissue Type", y = "Difference (diff)") +
+  scale_y_continuous(trans="log10")+ 
+  ylab("Absolute Sex Difference Effect Size")+
+  facet_wrap(~SDGroup)+
+  theme_classic()
+Fig3B
+
+ggsave("../_plots/Fig3B.jpg", width = 6, height = 3, device = "jpeg")
+```
+Saving out .data files
+```{r,save out r files}
+save(file='../_results/SD-dsx.data', AllTissuemz)
+save(file='../_results/Figure3.data', sig_3Gabdomen, sig_3Ghead, sig_3Gthorax)
+
+rm(list = ls())

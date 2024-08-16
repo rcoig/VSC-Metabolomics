@@ -1,0 +1,138 @@
+---
+title:   "A doublesex model for reduced dimorphism - SD tests"
+output:   html_notebook
+by:       R. Coig
+updated:  8/16/24
+---
+Notebook Summary: Statistical tests for significant reduction of sex differences
+```{r,load required libraries}
+library(dplyr)
+library(reshape2)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_results/Tukey_test_results.data')
+```
+Calculating total unique number of sig metabolites
+```{r}
+unique(Tukey_all_tested%>%filter(psig3G=="*")%>%dplyr::select(Metabolite))->sig_mzs
+Tukey_all_tested%>%filter(Metabolite%in%sig_mzs$Metabolite)%>%select(Metabolite,Ttype,diff_3G,diff_VSC,FDR_3G,FDR_VSC)->sigatleastone
+```
+Significant metabolites by tissue for 3G and VSC flies
+```{r}
+unique(Tukey_all_tested%>%filter(FDR_3G<.05&Ttype=="Head")%>%dplyr::select(Metabolite))->sigHeadmz
+unique(Tukey_all_tested%>%filter(FDR_3G<.05&Ttype=="Thorax")%>%dplyr::select(Metabolite))->sigThoraxmz
+unique(Tukey_all_tested%>%filter(FDR_3G<.05&Ttype=="Abdomen")%>%dplyr::select(Metabolite))->sigAbdomenmz
+sig_3Ghead<-unique(as.character(sigHeadmz$Metabolite))
+sig_3Gthorax<-unique(as.character(sigThoraxmz$Metabolite))
+sig_3Gabdomen<-unique(as.character(sigAbdomenmz$Metabolite))
+Tukey_all_tested%>%filter(FDR_VSC<.05&Ttype=="Head")%>%dplyr::select(Metabolite)%>%pull()%>%as.character()->sig_VSChead
+Tukey_all_tested%>%filter(FDR_VSC<.05&Ttype=="Thorax")%>%dplyr::select(Metabolite)%>%pull()%>%as.character()->sig_VSCthorax
+Tukey_all_tested%>%filter(FDR_VSC<.05&Ttype=="Abdomen")%>%dplyr::select(Metabolite)%>%pull()%>%as.character()->sig_VSCabdomen
+```
+Data for density plots
+```{r}
+dist_melt<-melt(Tukey_all_tested%>%select("Metabolite","Ttype","diff_3G","diff_VSC"),id.vars=c("Metabolite","Ttype"))
+dist_melt_sig<-melt(Tukey_all_tested%>%filter(Metabolite%in%sigatleastone$Metabolite)%>%dplyr::select("Metabolite","Ttype","diff_3G","diff_VSC"),id.vars=c("Metabolite","Ttype"))
+
+ES_allmz_summary <- dist_melt%>%group_by(Ttype,variable)%>%summarise(mean=round(mean(abs(value)),2),median=median(abs(value)))#mean and median of sex effect sizes across all metabolites
+ES_SDmz_summary <- dist_melt_sig%>%group_by(Ttype,variable)%>%summarise(mean=round(mean(abs(value)),2),median=median(abs(value)))#mean and median of sex effect sizes across SD metabolites
+```
+Formatting Table 1
+```{r}
+Table1<-merge(ES_SDmz_summary[,1:3],ES_allmz_summary[,1:3],by=c("variable","Ttype"))%>%
+  rename(SDGroup=variable,SD_meanES=mean.x,meanES=mean.y)
+Table1$N<-c(30,23,33,1,1,1)
+Table1$percent<-round((Table1$N/91),2)*100
+```
+Formatting df to plot diffs for 3G and VSC flies by tissue type
+```{r}
+Tukey3G<-Tukey_all_tested%>%dplyr::select("Metabolite","Ttype","diff_3G","FDR_3G","absdiff_3G")
+colnames(Tukey3G)<-c("Metabolite","Ttype","diff","p","absdiff")
+Tukey3G$diffgroup<-"3G"
+TukeyVSC<-Tukey_all_tested%>%dplyr::select("Metabolite","Ttype","diff_VSC","FDR_VSC","absdiff_VSC")
+colnames(TukeyVSC)<-c("Metabolite","Ttype","diff","p","absdiff")
+TukeyVSC$diffgroup<-"VSC"
+
+Tukmelt<-rbind(Tukey3G,TukeyVSC)
+
+Tukmelt<-merge(Tukmelt,Tukey_all_tested[,c(1:2,13:16)],by=c("Metabolite","Ttype"))
+```
+Filtering by those Higher in XX, versus those higher in XY for Figs 2B and 2C
+```{r}
+Tukey_all_tested%>%filter(psig3G=="*"&diff_3G<0,Ttype=="Head")%>%dplyr::select(Metabolite)->sigHeadmzXX
+Tukey_all_tested%>%filter(psig3G=="*"&diff_3G>0,Ttype=="Head")%>%dplyr::select(Metabolite)->sigHeadmzXY
+Tukey_all_tested%>%filter(psig3G=="*"&diff_3G<0,Ttype=="Thorax")%>%dplyr::select(Metabolite)->sigThoraxmzXX
+Tukey_all_tested%>%filter(psig3G=="*"&diff_3G>0,Ttype=="Thorax")%>%dplyr::select(Metabolite)->sigThoraxmzXY
+Tukey_all_tested%>%filter(psig3G=="*"&diff_3G<0,Ttype=="Abdomen")%>%dplyr::select(Metabolite)->sigAbdomenmzXX
+Tukey_all_tested%>%filter(psig3G=="*"&diff_3G>0,Ttype=="Abdomen")%>%dplyr::select(Metabolite)->sigAbdomenmzXY
+```
+Formatting df to plot diffs for 3G and VSC flies by tissue type
+```{r}
+Tukmelt<-Tukmelt[!duplicated(Tukmelt),]
+Tukmelt%>%filter(Ttype=="Head"&Metabolite%in%sigHeadmzXX$Metabolite)->TukmeltsigHeadXX
+Tukmelt%>%filter(Ttype=="Thorax"&Metabolite%in%sigThoraxmzXX$Metabolite)->TukmeltsigThoraxXX
+Tukmelt%>%filter(Ttype=="Abdomen"&Metabolite%in%sigAbdomenmzXX$Metabolite)->TukmeltsigAbdomenXX
+TukmeltplotXX<-rbind(TukmeltsigHeadXX,TukmeltsigThoraxXX,TukmeltsigAbdomenXX)
+
+Tukmelt%>%filter(Ttype=="Head"&Metabolite%in%sigHeadmzXY$Metabolite)->TukmeltsigHeadXY
+Tukmelt%>%filter(Ttype=="Thorax"&Metabolite%in%sigThoraxmzXY$Metabolite)->TukmeltsigThoraxXY
+Tukmelt%>%filter(Ttype=="Abdomen"&Metabolite%in%sigAbdomenmzXY$Metabolite)->TukmeltsigAbdomenXY
+TukmeltplotXY<-rbind(TukmeltsigHeadXY,TukmeltsigThoraxXY,TukmeltsigAbdomenXY)
+```
+Fig 2B and 2C, Metabolites with sig sex difference in 3G, but no sex difference in VSC flies
+```{r}
+dat_text_XX <- data.frame(
+  label = c("n = 10", "n = 15", "n = 16"),
+  Ttype   = factor(c("Head","Thorax","Abdomen"))
+)
+dat_text_XY <- data.frame(
+  label = c("n = 13", "n = 18", "n = 14"),
+  Ttype   = factor(c("Head","Thorax","Abdomen"))
+)
+```
+Statistical test comparing global sex differences in the metabolome for each tissue, saving out p-values for plot descriptions. Across ALL metabolites (Figure S3)
+```{r}
+Tukmelt_Head<-Tukmelt%>%filter(Ttype=="Head")
+fit_H<-lm(data=Tukmelt_Head,log10(absdiff)~diffgroup)
+Headresults<-anova(fit_H)
+p_head_allmz<-round(Headresults$`Pr(>F)`[1],3)
+
+Tukmelt_Thorax<-Tukmelt%>%filter(Ttype=="Thorax")
+fit_T<-lm(data=Tukmelt_Thorax,log10(absdiff)~diffgroup)
+Thoraxresults<-anova(fit_T)
+p_thorax_allmz<-round(Thoraxresults$`Pr(>F)`[1],3)
+
+Tukmelt_Abdomen<-Tukmelt%>%filter(Ttype=="Abdomen")
+fit_A<-lm(data=Tukmelt_Abdomen,log10(absdiff)~diffgroup)
+Abdomenresults<-anova(fit_A)
+p_abdomen_allmz<-round(Abdomenresults$`Pr(>F)`[1],4)
+```
+Statistical test comparing global sex differences in the metabolome for each tissue, saving out p-values for plot descriptions. Just for SD metabolites (Figure 2A)
+```{r}
+Tukmelt_Head<-Tukmelt%>%filter(Ttype=="Head")%>%filter(Metabolite%in%sigatleastone$Metabolite)
+fit_H<-lm(data=Tukmelt_Head,log10(absdiff)~diffgroup)
+Headresults<-anova(fit_H)
+p_head_SDmz<-round(Headresults$`Pr(>F)`[1],3)
+
+Tukmelt_Thorax<-Tukmelt%>%filter(Ttype=="Thorax")%>%filter(Metabolite%in%sigatleastone$Metabolite)
+fit_T<-lm(data=Tukmelt_Thorax,log10(absdiff)~diffgroup)
+Thoraxresults<-anova(fit_T)
+p_thorax_SDmz<-round(Thoraxresults$`Pr(>F)`[1],3)
+
+Tukmelt_Abdomen<-Tukmelt%>%filter(Ttype=="Abdomen")%>%filter(Metabolite%in%sigatleastone$Metabolite)
+fit_A<-lm(data=Tukmelt_Abdomen,log10(absdiff)~diffgroup)
+Abdomenresults<-anova(fit_A)
+p_abdomen_SDmz<-round(Abdomenresults$`Pr(>F)`[1],7)
+```
+Save out Table 1:
+```{r,save out results in csv format}
+write.csv(Table1,"output/02b_Table1.csv",row.names = F)
+```
+Saving out .data files
+```{r,save out r files}
+save(file='../_results/Figure2.data', dist_melt, dist_melt_sig, ES_allmz_summary, ES_SDmz_summary, TukmeltplotXX, TukmeltplotXY,dat_text_XY, dat_text_XX, p_abdomen_allmz,p_abdomen_SDmz,p_thorax_allmz,p_thorax_SDmz,p_head_allmz,p_head_SDmz)
+save(file='../_results/Figure3.data', sig_3Gabdomen, sig_3Ghead, sig_3Gthorax)
+rm(list = ls())
+```
