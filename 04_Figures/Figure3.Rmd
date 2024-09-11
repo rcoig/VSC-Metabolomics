@@ -2,12 +2,15 @@
 title:   "A doublesex model for reduced dimorphism - Figure 3"
 output:   html_notebook
 by:       R. Coig
-updated:  8/16/24
+updated:  8/28/24
 ---
 Notebook Summary: GGPlot code for Figure 3
 ```{r,load required libraries}
 library(dplyr)
 library(VennDiagram)
+library(cowplot)
+library(reshape2)
+library(ggplot2)
 ```
 Loading in data
 ```{r,loading data}
@@ -18,11 +21,16 @@ load('../_results/Tukey_test_results.data')
 
 Fig 3A, Venn diagrams of overlapping features between tissues
 ```{r}
-AllTissuemz<-intersect(sig_3Ghead, intersect(sig_3Gthorax, sig_3Gabdomen))
+AllTissuemz<-intersect(sig_w_head, intersect(sig_w_thorax, sig_w_abdomen))
 
-venn_tissue <- list(HEAD=sig_3Ghead,THORAX=sig_3Gthorax,ABDOMEN=sig_3Gabdomen)
+combined_vector <- union(sig_w_abdomen, sig_w_thorax)
+unique_to_head <- setdiff(sig_w_head, combined_vector)
+combined_vector <- union(sig_w_abdomen, sig_w_head)
+unique_to_thorax <- setdiff(sig_w_thorax, combined_vector)
+combined_vector <- union(sig_w_thorax, sig_w_head)
+unique_to_abdomen <- setdiff(sig_w_abdomen, combined_vector)
 
-venn_tissue <- list(HEAD = sig_3Ghead, THORAX = sig_3Gthorax, ABDOMEN = sig_3Gabdomen)
+venn_tissue <- list(HEAD=sig_w_head,THORAX=sig_w_thorax,ABDOMEN=sig_w_abdomen)
 
 # Create a Venn diagram
 venn.plot <- venn.diagram(
@@ -34,29 +42,35 @@ venn.plot <- venn.diagram(
   cat.fontfamily = "sans",
   main = "",
   scaled = F,
-  label.offset = 1  # Adjust this value to move the labels farther away
+  #label.offset = 5,  # Adjust this value to move the labels farther away
+  #cat.pos = c(-10, 10, 180),  # Adjust positions for each label
+  cat.dist = c(0.1, 0.1, 0.07)  # Adjust distance from the circles
 )
 
+# Create a blank canvas and place the plot in the middle
+venn.plot_with_margin <- ggdraw() +
+  draw_plot(venn.plot, x = 0.1, y = 0.1, width = 0.8, height = 0.8)
 
-# Plot the Venn diagram and save it
-grid.newpage()
-grid.draw(venn.plot)
-ggsave("../_plots/Fig3A.jpg", plot = venn.plot, width = 2, height = 2, device = "jpeg")
+# Save the plot with additional whitespace
+ggsave("../_plots/Fig3A.jpg", plot = venn.plot_with_margin, width = 3, height = 3, units = "in", device = "jpeg")
 ```
-Fig 3B, Effect sizes of 9 overlapping features between tissues
+Fig 3B, Effect sizes of 7 overlapping features between tissues
 ```{r}
 SD_results<-Tukey_all_tested%>%filter(Metabolite%in%AllTissuemz)
-VSC_results<-SD_results%>%select(Metabolite,diff_VSC,se_VSC,Ttype)%>%rename(diff=diff_VSC)%>%rename(se=se_VSC)%>%mutate(SDGroup="VSC")
-G3_results<-SD_results%>%select(Metabolite,diff_3G,se_3G,Ttype)%>%rename(diff=diff_3G)%>%rename(se=se_3G)%>%mutate(SDGroup="3G")
-SD_plot<-rbind(VSC_results,G3_results)
+d_results<-SD_results%>%select(Metabolite,ES_d,Ttype)%>%rename(ES=ES_d)%>%mutate(SDGroup="dsx null")
+w_results<-SD_results%>%select(Metabolite,ES_w,Ttype)%>%rename(ES=ES_w)%>%mutate(SDGroup="wildtype")
+SD_plot<-rbind(d_results,w_results)
 SD_plot <- melt(SD_plot, id.vars = c('Metabolite', 'Ttype', 'SDGroup'))
 SD_plot_wide <- dcast(SD_plot, Metabolite + Ttype + SDGroup ~ variable, value.var = "value")
 
-Fig3B<-ggplot(SD_plot_wide, aes(x = Ttype, y = abs(diff), color = Metabolite)) +
+# Assuming your factor is named Ttype
+SD_plot_wide$Ttype <- factor(SD_plot_wide$Ttype, levels = c("Head", "Thorax", "Abdomen"))
+
+Fig3B<-ggplot(SD_plot_wide, aes(x = Ttype, y = abs(ES), color = Metabolite)) +
   geom_point() +
   geom_line(aes(group=Metabolite)) +
-  #geom_errorbar(aes(ymin = abs(diff) - se, ymax = abs(diff) + se), width = 0.2) +
-  labs(x = "Tissue Type", y = "Difference (diff)") +
+  #geom_errorbar(aes(ymin = abs(ES) - se, ymax = abs(ES) + se), width = 0.2) +
+  labs(x = "Tissue Type", y = "ESerence (ES)") +
   scale_y_continuous(trans="log10")+ 
   ylab("Absolute Sex Difference Effect Size")+
   facet_wrap(~SDGroup)+
@@ -66,8 +80,8 @@ Fig3B
 ggsave("../_plots/Fig3B.jpg", width = 6, height = 3, device = "jpeg")
 ```
 Saving out .data files
-```{r,save out r files}
-save(file='../_results/SD-dsx.data', AllTissuemz)
-save(file='../_results/Figure3.data', sig_3Gabdomen, sig_3Ghead, sig_3Gthorax)
-
+```{r}
+save(file='../_results/SD_All.data', AllTissuemz)
+save(file='../_results/SD_by_Tissue.data', sig_w_abdomen, sig_w_head, sig_w_thorax)
 rm(list = ls())
+```

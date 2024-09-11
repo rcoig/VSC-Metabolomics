@@ -2,7 +2,7 @@
 title:   "A doublesex model for reduced dimorphism - PCA"
 output:   html_notebook
 by:       R. Coig
-updated:  8/16/24
+updated:  8/28/24
 ---
 Notebook Summary: PCA
 ```{r,load required libraries}
@@ -13,18 +13,18 @@ library(dplyr)#Data manipulation
 Loading in data
 ```{r,loading data}
 rm(list = ls())
-load('../data/scaled.data')
-load('../data/keys.data')
+load('../_data/scaled.data')
+load('../_data/abdomen_with_outlier_removed.data')
 ```
 PCA for all samples
 ```{r, performing PCA on combined sample data}
-pca_all <- prcomp(as.matrix(t(mz_log_forpca)))
+pca_all <- prcomp(as.matrix(t(mz_log_forpca_all)))
 #Extract the scores (principal components for each sample) and eigenvalues
 pc_scores <- pca_all$x
 #Extract categorical data for tissue, karyotype and sex characteristics
-Ttype<- substr(colnames(mz_log_forpca), 4, 4)
-Chromosome<- substr(colnames(mz_log_forpca), 1, 2)
-Dimorphism<- substr(colnames(mz_log_forpca), 3, 3)
+Ttype<- substr(colnames(mz_log_forpca_all), 4, 4)
+Chromosome<- substr(colnames(mz_log_forpca_all), 1, 2)
+Dimorphism<- substr(colnames(mz_log_forpca_all), 3, 3)
 #summary of results
 resultsmet <- summary(pca_all)
 summary(pca_all)
@@ -51,7 +51,7 @@ Head_screemet.data <- as.data.frame(Head_resultsmet$importance)
 Head_scoremet.data <- as.data.frame(Head_resultsmet$x)
 Head_loadingsmet.data <- as.data.frame(Head_resultsmet$rotation)
 Head_scoremet.data <- cbind(Head_scoremet.data, Head_Chromosome,Head_Dimorphism)
-Head_var1 <- round(screemet.data[2,1:4] * 100, 1)
+Head_var1 <- round(Head_screemet.data[2,1:4] * 100, 1)
 Head_var1
 ```
 ```{r, performing PCA on thorax}
@@ -69,7 +69,7 @@ Thorax_screemet.data <- as.data.frame(Thorax_resultsmet$importance)
 Thorax_scoremet.data <- as.data.frame(Thorax_resultsmet$x)
 Thorax_loadingsmet.data <- as.data.frame(Thorax_resultsmet$rotation)
 Thorax_scoremet.data <- cbind(Thorax_scoremet.data, Thorax_Chromosome,Thorax_Dimorphism)
-Thorax_var1 <- round(screemet.data[2,1:4] * 100, 1)
+Thorax_var1 <- round(Thorax_screemet.data[2,1:4] * 100, 1)
 Thorax_var1
 ```
 ```{r, performing PCA on abdomen}
@@ -87,18 +87,44 @@ Abdomen_screemet.data <- as.data.frame(Abdomen_resultsmet$importance)
 Abdomen_scoremet.data <- as.data.frame(Abdomen_resultsmet$x)
 Abdomen_loadingsmet.data <- as.data.frame(Abdomen_resultsmet$rotation)
 Abdomen_scoremet.data <- cbind(Abdomen_scoremet.data, Abdomen_Chromosome,Abdomen_Dimorphism)
-Abdomen_var1 <- round(screemet.data[2,1:4] * 100, 1)
+Abdomen_var1 <- round(Abdomen_screemet.data[2,1:4] * 100, 1)
 Abdomen_var1
+```
+```{r, performing PCA on abdomen without outlier}
+pca_abdomen_noXXwA4 <- prcomp(t(mz_log_forpca_abdomen_noXXwA4))
+
+# Extract the scores (principal components for each sample) and eigenvalues
+pc_scores <- pca_abdomen_noXXwA4$x
+
+Abdomen_Chromosome_noXXwA4<- substr(colnames(mz_log_forpca_abdomen_noXXwA4), 1, 2)
+Abdomen_Dimorphism_noXXwA4<- substr(colnames(mz_log_forpca_abdomen_noXXwA4), 3, 3)
+
+Abdomen_noXXwA4_resultsmet <- summary(pca_abdomen_noXXwA4)
+summary(pca_abdomen_noXXwA4)
+Abdomen_noXXwA4_screemet.data <- as.data.frame(Abdomen_noXXwA4_resultsmet$importance)
+Abdomen_noXXwA4_scoremet.data <- as.data.frame(Abdomen_noXXwA4_resultsmet$x)
+Abdomen_noXXwA4_loadingsmet.data <- as.data.frame(Abdomen_noXXwA4_resultsmet$rotation)
+Abdomen_noXXwA4_scoremet.data <- cbind(Abdomen_noXXwA4_scoremet.data, Abdomen_Chromosome_noXXwA4,Abdomen_Dimorphism_noXXwA4)
+Abdomen_noXXwA4_var1 <- round(Abdomen_noXXwA4_screemet.data[2,1:4] * 100, 1)
+Abdomen_noXXwA4_var1
 ```
 Saving out PCA results
 ```{r,saving out PCA results}
 write.csv(Head_loadingsmet.data,"output/01_Head_PC_Loadings.csv",row.names=T)
 write.csv(Thorax_loadingsmet.data,"output/01_Thorax_PC_Loadings.csv",row.names=T)
 write.csv(Abdomen_loadingsmet.data,"output/01_Abdomen_PC_Loadings.csv",row.names=T)
+write.csv(Abdomen_noXXwA4_loadingsmet.data,"output/01_Abdomen_PC_Loadings_without_outlier.csv",row.names=T)
 ```
 Saving out r files
 ```{r}
-save(file='../_results/PCA_by_Tissue.data', pca_head,pca_thorax,pca_abdomen,Head_loadingsmet.data, Thorax_loadingsmet.data, Abdomen_loadingsmet.data,Head_screemet.data,Head_Chromosome,Head_Dimorphism,Thorax_screemet.data,Thorax_Chromosome,Thorax_Dimorphism,Abdomen_screemet.data,Abdomen_Chromosome,Abdomen_Dimorphism)
-save(file='../_results/PCA_combined.data', pca_all,loadingsmet.data, Ttype)
+save(file='../_results/PCA_by_Tissue.data', pca_head,pca_thorax,pca_abdomen,
+     Head_loadingsmet.data, Thorax_loadingsmet.data, Abdomen_loadingsmet.data,
+     Head_screemet.data,Thorax_screemet.data,Abdomen_screemet.data,
+     Head_Chromosome,Head_Dimorphism,
+     Thorax_Chromosome,Thorax_Dimorphism,
+     Abdomen_Chromosome,Abdomen_Dimorphism)
+save(file='../_results/PCA_Abdomen_no_outlier.data', pca_abdomen_noXXwA4,
+     Abdomen_noXXwA4_loadingsmet.data,Abdomen_noXXwA4_scoremet.data, Abdomen_noXXwA4_screemet.data,Abdomen_Chromosome_noXXwA4,Abdomen_Dimorphism_noXXwA4)
+save(file='../_results/PCA_combined.data', pca_all,loadingsmet.data, screemet.data, Ttype)
 rm(list = ls())
 ```

@@ -1,0 +1,57 @@
+---
+title:   "A doublesex model for reduced dimorphism - Figure 2"
+output:   html_notebook
+by:       R. Coig
+updated:  8/28/24
+---
+Notebook Summary: GGPlot code for Figure 2
+```{r,load required libraries}
+library(ggplot2)
+```
+Loading in data
+```{r,loading data}
+rm(list = ls())
+load('../_results/Figure2.data')
+```
+Figure 2A:Density plots of effect sizes for wildtype and dsx null flies by tissue for SD metabolites. Plot is on log scale.
+```{r}
+# Explicitly reorder the levels of Ttype
+dist_melt_sig$Ttype <- factor(dist_melt_sig$Ttype, levels = c("Head", "Thorax", "Abdomen"))
+
+Fig2A<-ggplot(dist_melt_sig, aes(value, fill = variable)) +
+  geom_density(alpha = 0.7)+
+  facet_wrap(~as.factor(Ttype), nrow = 1) +  # Reorder within ggplot
+  xlab("Absolute Sex Difference Effect Size")+
+  scale_x_continuous(trans="log10",breaks=c(.1,1,10),labels=c(.1,1,10))+
+  geom_vline(data = ES_SDmz_summary, aes(xintercept = mean, color = variable))+
+  geom_vline(data = ES_SDmz_summary, aes(xintercept = median, color = variable),linetype="dashed")+
+  guides(color="none")+
+  scale_fill_manual(values=c("brown", "darkorange"),name="",labels=c("absES_w" = "wildtype", "absES_d" = "dsx null"))+
+  scale_color_manual(values=c("brown", "darkorange"))+
+  theme_classic()+
+  theme(legend.position=c(.1,.6))
+Fig2A
+
+ggsave("../_plots/Fig2A.jpg", width = 7, height = 2)
+```
+Figure 2B:Density plots of effect sizes for 3G and VSC by tissue for all metabolites. Plot is on log scale.
+```{r}
+# Explicitly reorder the levels of Ttype
+dist_melt$Ttype <- factor(dist_melt$Ttype, levels = c("Head", "Thorax", "Abdomen"))
+
+Fig2B<-ggplot(dist_melt, aes(value, fill = variable)) +
+  geom_density(alpha = 0.7)+
+  facet_wrap(~as.factor(Ttype), nrow = 1) +  # Reorder within ggplot
+  xlab("Absolute Sex Difference Effect Size")+
+  scale_x_continuous(trans="log10",breaks=c(.1,1,10),labels=c(.1,1,10))+
+  geom_vline(data = ES_allmz_summary, aes(xintercept = mean, color = variable))+
+  geom_vline(data = ES_allmz_summary, aes(xintercept = median, color = variable),linetype="dashed")+
+  guides(color="none")+
+  scale_fill_manual(values=c("brown", "darkorange"),name="",labels=c("absES_w" = "wildtype", "absES_d" = "dsx null"))+
+  scale_color_manual(values=c("brown", "darkorange"))+
+  theme_classic()+
+  theme(legend.position=c(.1,.6))
+Fig2B
+
+ggsave("../_plots/Fig2B.jpg", width = 7, height = 2)
+```

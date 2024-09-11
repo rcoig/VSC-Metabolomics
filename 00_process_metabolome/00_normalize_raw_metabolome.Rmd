@@ -2,7 +2,7 @@
 title:   "A doublesex model for reduced dimorphism - Normalizing the raw metabolome data"
 output:   html_notebook
 by:       R. Coig
-updated:  8/16/24
+updated:  8/28/24
 ---
 Notebook Summary: Normalizing the raw metabolome data
 ```{r,load required libraries}
@@ -24,36 +24,42 @@ data$Metabolite<-factor(data$Metabolite)#converting Metabolite to factor
 mz<-unique(data$Metabolite)#91 metabolites
 sum(is.na(data$Normalized.Area))#no missing data
 ```
+Recode Karyotype, SDGroup and Tissue as factors. Reorder Tissue factor levels.
+```{r, variables as factors}
+data$Karyotype <- factor(data$Karyotype, levels = c("XX", "XY"))
+data$SDGroup <- factor(data$SDGroup, levels = c("w", "d"))
+data$Tissue <- factor(data$Tissue, levels = c("Head", "Thorax", "Abdomen", "Whole"))
+```
 Create a matrix of all sample readings w/ Metabolites as row names, and individual matrices for each of the tissue types (head, thorax, abdomen)
 ```{r}
 # Filter, select, reshape the data
-matrix_samples_all <- data %>%
+matrix_samples <- data %>%
   filter(Type != "standard") %>%
   select(Name, Metabolite, Normalized.Area) %>%
   dcast(Metabolite ~ Name, value.var = "Normalized.Area")
 
 # Set row names and extract metabolites and sample names
-row.names(matrix_samples_all) <- matrix_samples_all$Metabolite
-mz <- matrix_samples_all$Metabolite
-matrix_samples_all$Metabolite <- NULL
-samples_all <- colnames(matrix_samples_all)#51 total samples
+row.names(matrix_samples) <- matrix_samples$Metabolite
+mz <- matrix_samples$Metabolite
+matrix_samples$Metabolite <- NULL
+samples <- colnames(matrix_samples)#51 total samples
 
-#XXGA4 was reported as an outlier, outlier test in another notebook
-matrix_samples <- matrix_samples_all%>%select(-XXGA4)
-samples <- colnames(matrix_samples)#50 samples after removing outlier
+#XXwA4 was reported as an outlier, I will run abdomen analyses both with and without this outlier
+matrix_samples_noXXwA4 <- matrix_samples%>%select(-XXwA4)
+samples_noXXwA4 <- colnames(matrix_samples_noXXwA4)#50 samples after removing outlier
 ```
 Splitting dfs based on the 4th letter of each column name which is Tissue Type for tissue-specific analyses
 ```{r}
 matrix_Head <- matrix_samples %>% select(starts_with(substring(colnames(matrix_samples), 1, 3) %>% paste0("H")))
 matrix_Thorax <- matrix_samples %>% select(starts_with(substring(colnames(matrix_samples), 1, 3) %>% paste0("T")))
 matrix_Abdomen <- matrix_samples %>% select(starts_with(substring(colnames(matrix_samples), 1, 3) %>% paste0("A")))
-matrix_Abdomen_all <- matrix_samples_all %>% select(starts_with(substring(colnames(matrix_samples_all), 1, 3) %>% paste0("A")))
+matrix_Abdomen_noXXwA4 <- matrix_samples_noXXwA4 %>% select(starts_with(substring(colnames(matrix_samples_noXXwA4), 1, 3) %>% paste0("A")))
 
 # Extract column names for samples
 samples_H <- colnames(matrix_Head)
 samples_T <- colnames(matrix_Thorax)
 samples_A <- colnames(matrix_Abdomen)
-samples_A_all <- colnames(matrix_Abdomen_all)
+samples_A_noXXwA4 <- colnames(matrix_Abdomen_noXXwA4)
 ```
 Log transform, scale and center each dataset by column for pca and analyses
 ```{r}
@@ -63,17 +69,16 @@ process_matrix <- function(matrix) {
 }
 
 # Applying the function to each matrix
-mz_log_forpca <- process_matrix(matrix_samples)
-mz_log_forpca_all <- process_matrix(matrix_samples_all)
+mz_log_forpca_all <- process_matrix(matrix_samples)
 mz_log_forpca_head <- process_matrix(matrix_Head)
 mz_log_forpca_thorax <- process_matrix(matrix_Thorax)
 mz_log_forpca_abdomen <- process_matrix(matrix_Abdomen)
-mz_log_forpca_abdomen_all <- process_matrix(matrix_Abdomen_all)
+mz_log_forpca_abdomen_noXXwA4 <- process_matrix(matrix_Abdomen_noXXwA4)
 ```
-Saving out centered and scaled R data files, for outlier test and further analysis
+Saving out centered and scaled R data files, for further analysis
 ```{r,save out r files}
-save(file='../_data/scaled.data', mz_log_forpca, mz_log_forpca_head, mz_log_forpca_thorax, mz_log_forpca_abdomen, mz, samples)
-save(file='../_data/scaled_with_outlier.data', mz_log_forpca_all, mz_log_forpca_head, mz_log_forpca_thorax, mz_log_forpca_abdomen_all, mz, samples)
+save(file='../_data/scaled.data', mz_log_forpca_all, mz_log_forpca_head, mz_log_forpca_thorax, mz_log_forpca_abdomen, mz, samples)
+save(file='../_data/abdomen_with_outlier_removed.data', mz_log_forpca_abdomen_noXXwA4, mz, samples_A_noXXwA4)
 save(file='../_data/keys.data', key, mz)
 rm(list=ls())
 ```

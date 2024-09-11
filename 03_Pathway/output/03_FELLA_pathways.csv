@@ -1,6 +1,12 @@
-"KEGG.id","Entry.type","KEGG.name","p.score","FDR"
-"dme00280","pathway","Valine, leucine and isoleucine degradation - ...",0.00199030944625408,0.00961224212812167
-"dme00290","pathway","Valine, leucine and isoleucine biosynthesis -...",0.00768979370249734,0.00961224212812167
-"dme00970","pathway","Aminoacyl-tRNA biosynthesis - Drosophila mela...",0.00768979370249734,0.00961224212812167
-"dme02010","pathway","ABC transporters - Drosophila melanogaster (f...",0.0070898479913138,0.00961224212812167
-"dme04150","pathway","mTOR signaling pathway - Drosophila melanogas...",0.0292878393051032,0.0292878393051032
+KEGG.id,Entry.type,KEGG.name,p.score,FDR
+dme04745,pathway,Phototransduction - fly - Drosophila melanoga...,0.008889628,0.043325557
+dme00280,pathway,"Valine, leucine and isoleucine degradation - ...",0.011489393,0.043325557
+dme00062,pathway,Fatty acid elongation - Drosophila melanogast...,0.01428914,0.043325557
+dme04320,pathway,Dorso-ventral axis formation - Drosophila mel...,0.020888543,0.043325557
+dme04150,pathway,mTOR signaling pathway - Drosophila melanogas...,0.028387865,0.043325557
+dme04392,pathway,Hippo signaling pathway - multiple species - ...,0.031187612,0.043325557
+dme04814,pathway,Motor proteins - Drosophila melanogaster (fru...,0.031187612,0.043325557
+dme00071,pathway,Fatty acid degradation - Drosophila melanogas...,0.036687115,0.043325557
+dme03440,pathway,Homologous recombination - Drosophila melanog...,0.03938687,0.043325557
+dme04341,pathway,Hedgehog signaling pathway - fly - Drosophila...,0.03938687,0.043325557
+dme03460,pathway,Fanconi anemia pathway - Drosophila melanogas...,0.044086445,0.044086445

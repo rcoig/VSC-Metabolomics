@@ -2,9 +2,9 @@
 title:   "A doublesex model for reduced dimorphism - ANOVA and Tukey HSD"
 output:   html_notebook
 by:       R. Coig
-updated:  8/16/24
+updated:  8/28/24
 ---
-Notebook Summary: ANOVA and within-tissue testing for significant sex differences in metabolite levels for 3G and VSC groups
+Notebook Summary: ANOVA and within-tissue testing for significant differences in metabolite levels between wildtype or dsx null sexes
 ```{r,load required libraries}
 library(dplyr)
 ```
@@ -12,6 +12,7 @@ Loading in data
 ```{r,loading data}
 rm(list = ls())
 load('../_data/scaled.data')
+load('../_data/abdomen_with_outlier_removed.data')
 load('../_data/keys.data')
 ```
 Formatting data frames for significance testing
@@ -19,6 +20,7 @@ Formatting data frames for significance testing
 data_Head<-as.data.frame(t(mz_log_forpca_head))
 data_Thorax<-as.data.frame(t(mz_log_forpca_thorax))
 data_Abdomen<-as.data.frame(t(mz_log_forpca_abdomen))
+data_Abdomen_noXXwA4<-as.data.frame(t(mz_log_forpca_abdomen_noXXwA4))
 row.names(key)<-key$Name
 ```
 adding group labels to dfs
@@ -27,59 +29,39 @@ source("src/mergegroups_function.R")
 data_Head<-mergegroups(data_Head)
 data_Thorax<-mergegroups(data_Thorax)
 data_Abdomen<-mergegroups(data_Abdomen)
+data_Abdomen_noXXwA4<-mergegroups(data_Abdomen_noXXwA4)
 ```
 Tukey's HSD testing within each tissue df
 ```{r}
 source("src/Tukeytesting_loop.R")
-data_list<-list(data_Head, data_Thorax, data_Abdomen)
+data_list<-list(data_Head, data_Thorax, data_Abdomen, data_Abdomen_noXXwA4)
 data_Tukey_tested <- lapply(data_list, Tukeytesting) 
-names(data_Tukey_tested) <- c("Tukey_Head_test","Tukey_Thorax_test","Tukey_Abdomen_test")
+names(data_Tukey_tested) <- c("Tukey_Head_test","Tukey_Thorax_test","Tukey_Abdomen_test","Tukey_Abdomen_test_noXXwA4")
 list2env(data_Tukey_tested,globalenv())
 ```
-Combining results for all tissues into one df, adding tissue type and adjusting pvalue for multiple tests
+Combining results for all tissues into one df, adding tissue type
 ```{r}
 Tukey_all_tested<-rbind(Tukey_Head_test,Tukey_Thorax_test,Tukey_Abdomen_test)
 Tukey_all_tested$Ttype<-c(rep("Head",91),rep("Thorax",91),rep("Abdomen",91))
 Tukey_all_tested<-Tukey_all_tested %>%select(1, Ttype, everything())
-Tukey_all_tested$FDR_3G<-p.adjust(Tukey_all_tested$p_3G,method="fdr")
-Tukey_all_tested$FDR_VSC<-p.adjust(Tukey_all_tested$p_VSC,method="fdr")
+
+Tukey_all_tested_noXXwA4<-rbind(Tukey_Head_test,Tukey_Thorax_test,Tukey_Abdomen_test_noXXwA4)
+Tukey_all_tested_noXXwA4$Ttype<-c(rep("Head",91),rep("Thorax",91),rep("Abdomen",91))
+Tukey_all_tested_noXXwA4<-Tukey_all_tested_noXXwA4 %>%select(1, Ttype, everything())
 ```
-marking significant and non-significant metabolites for sorting
+Correcting for multiple comparisons
 ```{r}
-Tukey_all_tested$psig3G[Tukey_all_tested$FDR_3G<.05]<-"*"
-Tukey_all_tested$psig3G[Tukey_all_tested$FDR_3G>=.05]<-"ns"
-Tukey_all_tested$psigVSC[Tukey_all_tested$FDR_VSC<.05]<-"*"
-Tukey_all_tested$psigVSC[Tukey_all_tested$FDR_VSC>=.05]<-"ns"
-Tukey_all_tested$psig3G2<-"ns"
-Tukey_all_tested$psig3G2[Tukey_all_tested$FDR_3G < 0.05] <- "*"
-Tukey_all_tested$psig3G2[Tukey_all_tested$FDR_3G < 0.01] <- "**"
-Tukey_all_tested$psig3G2[Tukey_all_tested$FDR_3G < 0.001] <- "***"
-Tukey_all_tested$psig3G2[Tukey_all_tested$FDR_3G < 0.0001] <- "****"
-Tukey_all_tested$psig3G2[Tukey_all_tested$FDR_3G < 0.00001] <- "*****"
-Tukey_all_tested$psigVSC2<-"ns"
-Tukey_all_tested$psigVSC2[Tukey_all_tested$FDR_VSC < 0.05] <- "*"
-Tukey_all_tested$psigVSC2[Tukey_all_tested$FDR_VSC < 0.01] <- "**"
-Tukey_all_tested$psigVSC2[Tukey_all_tested$FDR_VSC < 0.001] <- "***"
-Tukey_all_tested$psigVSC2[Tukey_all_tested$FDR_VSC < 0.0001] <- "****"
-Tukey_all_tested$psigVSC2[Tukey_all_tested$FDR_VSC < 0.00001] <- "*****"
-```
-calculating standard errors from confidence intervals
-```{r}
-Tukey_all_tested$se_3G <-(Tukey_all_tested$upr_3G-Tukey_all_tested$lwr_3G)/3.92 # calculating SE from 95% confidence intervals
-Tukey_all_tested$se_VSC <-(Tukey_all_tested$upr_VSC-Tukey_all_tested$lwr_VSC)/3.92 # calculating SE from 95% confidence intervals
-Tukey_all_tested$Ttype <- factor(Tukey_all_tested$Ttype, levels = c("Head", "Thorax", "Abdomen"))
-```
-Caclulating the absolute value of the diff
-```{r}
-Tukey_all_tested$absdiff_3G <-abs(Tukey_all_tested$diff_3G)
-Tukey_all_tested$absdiff_VSC <-abs(Tukey_all_tested$diff_VSC)
+source("src/multiple_testing_correction.R")
+Tukey_all_tested<-multiple_testing(Tukey_all_tested)
+Tukey_all_tested_noXXwA4<-multiple_testing(Tukey_all_tested_noXXwA4)
 ```
 Save out results:
 ```{r,save out results in csv format}
 write.csv(Tukey_all_tested,"output/02a_Tukey_test_statistics.csv",row.names = F)
+write.csv(Tukey_all_tested_noXXwA4,"output/02a_Tukey_test_statistics_Abdomen_no_outlier.csv",row.names = F)
 ```
 Saving out .data files
 ```{r,save out r files}
-save(file='../_results/Tukey_test_results.data', Tukey_all_tested, Tukey_Head_test, Tukey_Thorax_test, Tukey_Abdomen_test)
+save(file='../_results/Tukey_test_results.data', Tukey_all_tested, Tukey_all_tested_noXXwA4)
 rm(list = ls())
 ```
